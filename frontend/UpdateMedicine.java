@@ -95,6 +95,7 @@ public class UpdateMedicine extends JFrame {
                     int rowsAffected = preparedStatement.executeUpdate();
                     if (rowsAffected > 0) {
                         JOptionPane.showMessageDialog(null, "Medicine updated successfully!");
+                        clearData();
                     } else {
                         JOptionPane.showMessageDialog(null, "Failed to update medicine.");
                     }
@@ -141,6 +142,15 @@ public class UpdateMedicine extends JFrame {
                 }
             }
         });
+    }
+    public void clearData() {
+    	nameField.setText("");
+        manufacturerField.setText("");
+        stockField.setText("");
+        priceField.setText("");
+        expDateField.setText("");
+        packSizeField.setText("");
+        medIdField.setText("");
     }
     public static void main(String[] args) {
 		new UpdateMedicine().setVisible(true);
