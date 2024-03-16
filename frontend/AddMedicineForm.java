@@ -6,6 +6,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
+import java.time.LocalDate;
 
 public class AddMedicineForm extends JFrame {
     private JTextField medIdField, nameField, manufacturerField, stockField, priceField, expDateField, packSizeField;
@@ -94,6 +95,9 @@ public class AddMedicineForm extends JFrame {
             return;
         }
 
+//        LocalDate currentDate = LocalDate.now();
+//        LocalDate expiryDate = LocalDate.parse(expDate);
+//        assert !expiryDate.isBefore(currentDate) : "Expiry date cannot be before the current date.";
         // Perform database insertion
         try {
             String url = "jdbc:mysql://pharmacy-database-management.ctau02a6kr5e.ap-south-1.rds.amazonaws.com:3306/mydb";
