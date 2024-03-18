@@ -7,36 +7,36 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 
-public class CustomerSales extends JFrame {
-    private JTextField customerIdField;
+public class ViewBill extends JFrame {
+    private JTextField saleIdField;
     private JTable salesTable;
     private JLabel totalSalesLabel;
 
-    public CustomerSales() {
-        setTitle("View Customer Sale");
+    public ViewBill() {
+        setTitle("View Bill");
         setSize(600, 400);
         //setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
         // Top panel with customer ID field and search button
         JPanel topPanel = new JPanel(new FlowLayout());
-        JLabel customerIdLabel = new JLabel("Customer ID:");
-        customerIdField = new JTextField(10);
+        JLabel saleIdLabel = new JLabel("Sale ID:");
+        saleIdField = new JTextField(10);
         JButton searchButton = new JButton("Search");
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String customerId = customerIdField.getText().trim();
-                if (!customerId.isEmpty()) {
-                    fetchSalesData(customerId);
-                    calculateTotalSales(customerId);
+                String saleId = saleIdField.getText().trim();
+                if (!saleId.isEmpty()) {
+                    fetchSalesData(saleId);
+                    calculateTotalSales(saleId);
                 } else {
                     JOptionPane.showMessageDialog(null, "Please enter a Customer ID", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
-        topPanel.add(customerIdLabel);
-        topPanel.add(customerIdField);
+        topPanel.add(saleIdLabel);
+        topPanel.add(saleIdField);
         topPanel.add(searchButton);
         add(topPanel, BorderLayout.NORTH);
 
@@ -46,14 +46,14 @@ public class CustomerSales extends JFrame {
         add(scrollPane, BorderLayout.CENTER);
         
         JPanel bottomPanel = new JPanel(new FlowLayout());
-        JLabel totalSalesTextLabel = new JLabel("Lifetime Sales Amount Total: ");
+        JLabel totalSalesTextLabel = new JLabel("Grand Total: ");
         totalSalesLabel = new JLabel();
         bottomPanel.add(totalSalesTextLabel);
         bottomPanel.add(totalSalesLabel);
         add(bottomPanel, BorderLayout.SOUTH);
     }
 
-    private void fetchSalesData(String customerId) {
+    private void fetchSalesData(String saleId) {
         // MySQL connection parameters
         String url = "jdbc:mysql://pharmacy-database-management.ctau02a6kr5e.ap-south-1.rds.amazonaws.com:3306/mydb";
         String user = "admin";
@@ -61,24 +61,24 @@ public class CustomerSales extends JFrame {
 
         // Fetching data from MySQL
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "SELECT s.saleID, s.saleDate, m.name, m.price, s.quantity " +
-                           "FROM Sales s " +
-                           "JOIN Medicines m ON s.medID = m.medID " +
-                           "JOIN Customers c ON s.customerID = c.customerID " +
-                           "WHERE c.customerID = ?";
+            String query = "SELECT s.saleId, s.saleDate, m.name, m.price, s.quantity, s.subTotal\n"
+            		+ "FROM Sales s\n"
+            		+ "JOIN Medicines m ON s.medId = m.medId\n"
+            		+ "WHERE s.saleId = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, customerId);
+            preparedStatement.setString(1, saleId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             // Populate the table with fetched data
-            DefaultTableModel model = new DefaultTableModel(new String[]{"Sale ID", "Sale Date", "Medicine Name", "Price", "Quantity"}, 0);
+            DefaultTableModel model = new DefaultTableModel(new String[]{"Sale ID", "Sale Date", "Medicine Name", "Price", "Quantity", "Subtotal"}, 0);
             while (resultSet.next()) {
-                String saleId = resultSet.getString("saleID");
+                String sId = resultSet.getString("saleID");
                 String saleDate = resultSet.getString("saleDate");
-                String medicineName = resultSet.getString("Name");
+                String medicineName = resultSet.getString("name");
                 double price = resultSet.getDouble("price");
                 int quantity = resultSet.getInt("quantity");
-                model.addRow(new Object[]{saleId, saleDate, medicineName, price, quantity});
+                double subTotal = resultSet.getDouble("subTotal");
+                model.addRow(new Object[]{sId, saleDate, medicineName, price, quantity, subTotal});
             }
             salesTable.setModel(model);
         } catch (SQLException e) {
@@ -87,7 +87,7 @@ public class CustomerSales extends JFrame {
         }
     }
 
-    private void calculateTotalSales(String customerId) {
+    private void calculateTotalSales(String saleId) {
         // MySQL connection parameters
         String url = "jdbc:mysql://pharmacy-database-management.ctau02a6kr5e.ap-south-1.rds.amazonaws.com:3306/mydb";
         String user = "admin";
@@ -95,13 +95,13 @@ public class CustomerSales extends JFrame {
 
         // Fetching total sales amount from MySQL
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "SELECT SUM(s.quantity * m.price) AS TotalSales " +
-                    "FROM Sales s " +
-                    "JOIN Medicines m ON s.medID = m.medID " +
-                    "JOIN Customers c ON s.customerID = c.customerID " +
-                    "WHERE c.CustomerID = ?";
+            String query = "SELECT SUM(s.subTotal) AS TotalSales\n" 
+                    + "FROM Sales s\n" 
+                    + "JOIN Medicines m ON s.medID = m.medID\n" 
+                    + "JOIN Customers c ON s.customerID = c.customerID\n" 
+                    + "WHERE s.saleID = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, customerId);
+            preparedStatement.setString(1, saleId);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 double totalSales = resultSet.getDouble("TotalSales");
@@ -114,6 +114,7 @@ public class CustomerSales extends JFrame {
     }
     
     public static void main(String[] args) {
-         new CustomerSales().setVisible(true);
+         new ViewBill().setVisible(true);
     }
 }
+

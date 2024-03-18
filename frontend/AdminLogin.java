@@ -12,7 +12,7 @@ public class AdminLogin extends JFrame implements ActionListener {
     public AdminLogin() {
         setTitle("Admin Login");
         setSize(300, 200);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(null);
 
         userLabel = new JLabel("Username:");

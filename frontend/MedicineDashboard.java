@@ -63,7 +63,7 @@ public class MedicineDashboard extends JFrame {
         
         // Set the size and behavior of the frame
         setSize(700, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
     public static void main(String[] args) {
     	EventQueue.invokeLater(new Runnable() {

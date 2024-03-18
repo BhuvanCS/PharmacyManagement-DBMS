@@ -6,7 +6,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
-import java.time.LocalDate;
+
 
 public class AddMedicineForm extends JFrame {
     private JTextField medIdField, nameField, manufacturerField, stockField, priceField, expDateField, packSizeField;
@@ -14,7 +14,7 @@ public class AddMedicineForm extends JFrame {
     public AddMedicineForm() {
         setTitle("Add a Medicine");
         setSize(400, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Create labels and text fields
         JLabel medIdLabel = new JLabel("Medicine ID:");

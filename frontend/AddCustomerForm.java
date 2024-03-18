@@ -14,7 +14,7 @@ public class AddCustomerForm extends JFrame {
     public AddCustomerForm() {
         setTitle("Register a New Customer");
         setSize(400, 200);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Create labels and text fields
         

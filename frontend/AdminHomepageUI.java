@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
 
 public class AdminHomepageUI extends JFrame {
 	
-	static String[] adminActions = {"Manage Medicine", "Manage Orders", "Manage Sales", "Manage Customers", "View Alerts", "Log Out"};
+	static String[] adminActions = {"Manage Medicine", "Manage Sales", "Manage Customers", "Log Out"};
 	
 	public AdminHomepageUI() {
 
@@ -33,7 +33,7 @@ public class AdminHomepageUI extends JFrame {
         headingPanel.add(headingLabel);
 
         // Create a panel for the grid layout
-        JPanel gridPanel = new JPanel(new GridLayout(4, 2));
+        JPanel gridPanel = new JPanel(new GridLayout(2, 2));
         
         // Create and add the buttons to the grid panel
         for (int i = 0; i < adminActions.length; i++) {
@@ -59,33 +59,26 @@ public class AdminHomepageUI extends JFrame {
         add(gridPanel, BorderLayout.CENTER);
         
         // Set the size and behavior of the frame
-        setSize(800, 400);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(800, 300);
+        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
 	}
     
     public  void navigate(int actionIndex) {
     	switch(actionIndex) {
     	case 0:
-    	case 1:
     		//call
     		new MedicineDashboard().setVisible(true);
     		break;
+    	case 1:
     		//call
+    		new SalesDashboard().setVisible(true);
+    		break;
     	case 2:
     		//call
-    		
+    		new CustomerDashboard().setVisible(true);
     		break;
     	case 3:
-    		//call
-    		
-    		break;
-    	case 4:
-    		//call
-    		
-    		break;
- 
-    	case 5:
     		int confirmation = JOptionPane.showConfirmDialog(
                     AdminHomepageUI.this,
                     "Are you sure you want to Logout?",
@@ -106,6 +99,8 @@ public class AdminHomepageUI extends JFrame {
                 new AdminLogin().setVisible(true);
             }
     		break;
+  
+    		
     		
     	}
     }

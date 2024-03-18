@@ -16,18 +16,18 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CustomerDashboard extends JFrame {
-	static String[] userActions = {"Add Customer", "View Customer Sales", "Search Customer", "Update Customer"};
+public class SalesDashboard extends JFrame {
+	static String[] userActions = {"New Billing", "View Bill"};
 	
 	
 	
-	public CustomerDashboard() {
+	public SalesDashboard() {
 		
 		 // Create a panel to hold the heading label
         JPanel headingPanel = new JPanel();
         
         // Create a label for the heading
-        JLabel headingLabel = new JLabel("Customer Management Module");
+        JLabel headingLabel = new JLabel("Sales and Billing Management Module");
         headingLabel.setFont(new Font("Copperplate Gothic Bold", Font.BOLD, 30));
         EmptyBorder padding = new EmptyBorder(15,0,30,0);
         headingLabel.setBorder(padding);
@@ -36,10 +36,10 @@ public class CustomerDashboard extends JFrame {
         headingPanel.add(headingLabel);
 
         // Create a panel for the grid layout
-        JPanel gridPanel = new JPanel(new GridLayout(2,2));
+        JPanel gridPanel = new JPanel(new GridLayout(1,2));
         
         // Create and add the buttons to the grid panel
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < userActions.length; i++) {
         	final int actionIndex = i;
             JButton button = new JButton(userActions[i]);
             button.setFont(new Font("Segoe UI", Font.BOLD, 20));
@@ -63,14 +63,14 @@ public class CustomerDashboard extends JFrame {
         add(gridPanel, BorderLayout.CENTER);
         
         // Set the size and behavior of the frame
-        setSize(700, 300);
+        setSize(700, 240);
         //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
     public static void main(String[] args) {
     	EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CustomerDashboard frame = new CustomerDashboard();
+					SalesDashboard frame = new SalesDashboard();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -82,24 +82,24 @@ public class CustomerDashboard extends JFrame {
     	switch(actionIndex) {
     	case 0:
     		//call
-    		AddCustomerForm frame0 = new AddCustomerForm();
-    		frame0.setVisible(true);
+    		new NewBilling().setVisible(true);
     		break;
     	case 1:
     		//call
-    		new CustomerSales().setVisible(true);
+    		new ViewBill().setVisible(true);
     		break;
     	case 2:
     		//call
-    		SearchCustomer frame = new SearchCustomer();
+    		MedicineTable frame = new MedicineTable();
     		frame.pack();
     		frame.setVisible(true);
     		break;
     	case 3:
-    		new UpdateCustomer().setVisible(true);
+    		new UpdateMedicine().setVisible(true);
     		break;
     	}
     }
 }
+
 
 

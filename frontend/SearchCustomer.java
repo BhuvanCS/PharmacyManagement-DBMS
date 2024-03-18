@@ -55,7 +55,7 @@ public class SearchCustomer extends JFrame {
     public static void main(String[] args) {
         
             SearchCustomer frame = new SearchCustomer();
-            frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+            //frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
             frame.pack();
             frame.setVisible(true);
         

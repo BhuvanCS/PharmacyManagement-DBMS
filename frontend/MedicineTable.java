@@ -121,7 +121,7 @@ public class MedicineTable extends JFrame
     public static void main(String[] args)
     {
         MedicineTable frame = new MedicineTable();
-        frame.setDefaultCloseOperation( EXIT_ON_CLOSE );
+        //frame.setDefaultCloseOperation( EXIT_ON_CLOSE );
         frame.pack();
         frame.setVisible(true);
     }

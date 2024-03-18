@@ -16,7 +16,7 @@ public class UpdateCustomer extends JFrame {
     public UpdateCustomer() {
         setTitle("Update Customer Details");
         setSize(400, 300);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
         // Components

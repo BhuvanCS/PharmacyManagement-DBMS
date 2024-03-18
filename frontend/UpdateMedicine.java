@@ -17,7 +17,7 @@ public class UpdateMedicine extends JFrame {
     public UpdateMedicine() {
         setTitle("Update Medicine");
         setSize(400, 300);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
         // Components
@@ -83,15 +83,15 @@ public class UpdateMedicine extends JFrame {
 
                     // Establishing connection to the database
                     Connection connection = DriverManager.getConnection(url, user, password);
-                    String updateQuery = "UPDATE Medicines SET name=?, manufacturer=?, stock=?, price=?, expDate=?, packSize=? WHERE medID=?";
+                    String updateQuery = "CALL UpdateMedicineDetails(?, ?, ?, ?, ?, ?, ?)";
                     PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
-                    preparedStatement.setString(1, name);
-                    preparedStatement.setString(2, manufacturer);
-                    preparedStatement.setInt(3, stock);
-                    preparedStatement.setDouble(4, price);
-                    preparedStatement.setString(5, expDate);
-                    preparedStatement.setString(6, packSize);
-                    preparedStatement.setString(7, medId);
+                    preparedStatement.setString(2, name);
+                    preparedStatement.setString(3, manufacturer);
+                    preparedStatement.setInt(4, stock);
+                    preparedStatement.setDouble(5, price);
+                    preparedStatement.setString(6, expDate);
+                    preparedStatement.setString(7, packSize);
+                    preparedStatement.setString(1, medId);
                     int rowsAffected = preparedStatement.executeUpdate();
                     if (rowsAffected > 0) {
                         JOptionPane.showMessageDialog(null, "Medicine updated successfully!");
